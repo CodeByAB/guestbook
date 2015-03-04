@@ -23,7 +23,7 @@ Tjänsten kommer ha typ tre resurser:
 Den första finns nästan komplett för att kunna tittas på, övriga är fria att utveckla.
 
 ## Komma igång
-* Börja med att clona repot `ttps://github.com/WebstepSweden/guestbook.git`
+* Börja med att clona repot `https://github.com/WebstepSweden/guestbook.git`
 * Öppna projectet i valfri IDE
 
 Lättast är att starta tjänsten från IDE'n genom att köra klassen
