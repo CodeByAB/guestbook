@@ -9,7 +9,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.sqlobject.customizers.SingleValueResult;
 import se.webstep.microservice.guestbook.api.CreateGuestbook;
 import se.webstep.microservice.guestbook.core.Guestbook;
-
+import se.webstep.microservice.guestbook.util.BindEnum;
 
 @RegisterMapper(GuestbookMapper.class)
 public abstract class GuestbookDao {
@@ -23,12 +23,18 @@ public abstract class GuestbookDao {
 
     public long save(CreateGuestbook createGuestbook) {
         long id = getId();
-        insert(id, createGuestbook.name, createGuestbook.status.name());
+        insert(id, createGuestbook.name, createGuestbook.status);
         return id;
     }
 
+    @SqlUpdate("UPDATE guestbook SET status = :status WHERE id = :id")
+    public abstract void changeStatus(@Bind("id") long id,
+                                      @BindEnum("status") Guestbook.Type status);
+
     @SqlUpdate("INSERT INTO guestbook (id, name, status, created_at) VALUES (:id, :name, :status, sysdate)")
-    abstract void insert(@Bind("id") long id, @Bind("name") String name, @Bind("status") String status);
+    abstract void insert(@Bind("id") long id,
+                         @Bind("name") String name,
+                         @BindEnum("status") Guestbook.Type status);
 
     @SqlUpdate("DELETE FROM guestbook WHERE id = :id")
     public abstract void delete(@Bind("id") long id);

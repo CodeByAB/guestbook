@@ -38,7 +38,7 @@ public class MicroServicesApplication extends Application<MicroServicesConfig> {
 
     @Override
     public String getName() {
-        return "Micro-services";
+        return "Guestbook-services";
     }
 
     public DBI getJdbi() {
