@@ -1,4 +1,4 @@
-package se.webstep.services.guestbook.health;
+package se.webstep.microservice.guestbook.health;
 
 import com.codahale.metrics.health.HealthCheck;
 

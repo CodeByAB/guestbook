@@ -6,16 +6,24 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="create_writer_table" author="dvalfrid">
-        <createTable tableName="writer">
+    <changeSet id="1" author="guestbook-service">
+        <createTable tableName="guestbook">
             <column name="id" type="long">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(255)">
+            <column name="name" type="varchar2(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="email" type="varchar(255)"/>
+            <column name="status" type="varchar2(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
-        <createSequence sequenceName="writer_sequence" startValue="1"/>
+        <createSequence sequenceName="guestbook_sequence"/>
+
+        <!--TODO -->
+
     </changeSet>
 </databaseChangeLog>
