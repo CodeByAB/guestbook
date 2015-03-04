@@ -8,6 +8,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.skife.jdbi.v2.DBI;
 import se.webstep.microservice.guestbook.health.SimpleHealthCheck;
+import se.webstep.microservice.guestbook.resource.DocumentationResource;
 import se.webstep.microservice.guestbook.resource.GuestbookResource;
 
 public class MicroServicesApplication extends Application<MicroServicesConfig> {
@@ -32,13 +33,14 @@ public class MicroServicesApplication extends Application<MicroServicesConfig> {
     public void run(MicroServicesConfig microServicesConfig, Environment environment) throws Exception {
         jdbi = new DBIFactory().build(environment, microServicesConfig.getDataSourceFactory(), "guestbook");
 
+        environment.jersey().register(new DocumentationResource(getName()));
         environment.jersey().register(new GuestbookResource(this));
         environment.healthChecks().register("simple", new SimpleHealthCheck());
     }
 
     @Override
     public String getName() {
-        return "Guestbook-services";
+        return "Guestbook service";
     }
 
     public DBI getJdbi() {

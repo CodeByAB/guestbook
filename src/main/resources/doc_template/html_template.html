@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>#{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+    <!-- jQuery -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+
+    <!-- tocify -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.7.0/jquery.tocify.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            // Add the .table-class to all tables.
+            $("table").addClass("table table-bordered table-condensed");
+            // Calls the tocify method on your HTML div.
+            $("#toc").tocify({ showEffect: "fadeIn", selectors: "h2,h3,h4" });
+        });
+    </script>
+
+    <style>
+        /*
+       * jquery.tocify.css 1.8.0
+       * Author: @gregfranko
+       */
+        /* The Table of Contents container element */
+        .tocify {
+            width: 20%;
+            max-height: 90%;
+            overflow: auto;
+            margin-top: 2%;
+            margin-left: 2%;
+            /* position: fixed; */
+            position: fixed;
+            border: 1px solid #ccc;
+            webkit-border-radius: 6px;
+            moz-border-radius: 6px;
+            border-radius: 6px;
+        }
+        /* The Table of Contents is composed of multiple nested unordered lists. These styles remove the default styling of an unordered list because it is ugly. */
+        .tocify ul, .tocify li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border: none;
+            line-height: 30px;
+        }
+        /* Top level header elements */
+        .tocify-header {
+            text-indent: 10px;
+        }
+        /* Top level subheader elements. These are the first nested items underneath a header element. */
+        .tocify-subheader {
+            text-indent: 20px;
+            display: none;
+        }
+        /* Makes the font smaller for all subheader elements. */
+        .tocify-subheader li {
+            font-size: 12px;
+        }
+        /* Further indents second level subheader elements. */
+        .tocify-subheader .tocify-subheader {
+            text-indent: 30px;
+        }
+        /* Further indents third level subheader elements. You can continue this pattern if you have more nested elements. */
+        .tocify-subheader .tocify-subheader .tocify-subheader {
+            text-indent: 40px;
+        }
+        /* Twitter Bootstrap Override Style */
+        .nav-list > li > a, .nav-list .nav-header {
+            margin: 0px;
+        }
+        /* Twitter Bootstrap Override Style */
+        .nav-list > li > a {
+            padding: 5px;
+        }
+        .container {
+            margin-top: 1%;
+            margin-left: 23%;
+        }
+    </style>
+
+</head>
+<body>
+<div id="toc">
+    <h3>&nbsp;<span class="glyphicon glyphicon-list-alt"></span> Table of contents</h3>
+</div>
+<div class="container">
+
+    <div class="jumbotron">
+        <h1>#{title}</h1>
+    </div>
+
+    #{content}
+</div>
+
+<div id="footer">
+    <div class="container">
+        <p class="text-muted credit">Copyright 2015 Webstep</p>
+    </div>
+</div>
+</body>
+</html>

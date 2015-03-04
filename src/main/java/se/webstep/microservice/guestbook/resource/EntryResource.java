@@ -18,13 +18,13 @@ public class EntryResource {
 
     @POST
     public Response create(@PathParam("id") LongParam id) {
-
-        return Response.created(URI.create("id")).build();
+        // TODO
+        return null;
     }
 
     @DELETE
     public Response delete(@PathParam("id") LongParam id) {
-
-        return Response.ok().build();
+        // TODO
+        return null;
     }
 }
