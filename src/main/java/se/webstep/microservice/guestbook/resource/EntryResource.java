@@ -1,10 +1,7 @@
 package se.webstep.microservice.guestbook.resource;
 
 import com.google.common.base.Optional;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiResponse;
-import com.wordnik.swagger.annotations.ApiResponses;
+import com.wordnik.swagger.annotations.*;
 import io.dropwizard.jersey.params.LongParam;
 import se.webstep.microservice.guestbook.MicroServicesApplication;
 import se.webstep.microservice.guestbook.api.CreateEntry;
@@ -35,7 +32,8 @@ public class EntryResource {
             @ApiResponse(code = 201, message = "Entry is created")
     })
     @POST
-    public Response create(@PathParam("guestbookId") LongParam guestbookId, @Valid CreateEntry createEntry) {
+    public Response create(@PathParam("guestbookId") LongParam guestbookId,
+                           @Valid @ApiParam(value = "entry", defaultValue = "{ \"text\": \"Hello world\", \"author\": \"Uzilan\"}") CreateEntry createEntry) {
         Optional<Guestbook> guestbook = service.getJdbi().onDemand(GuestbookDao.class).get(guestbookId.get());
         if (guestbook.isPresent()) {
             return Response.created(URI.create(String.valueOf(service.getJdbi()
