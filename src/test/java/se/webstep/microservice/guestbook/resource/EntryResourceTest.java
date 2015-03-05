@@ -18,6 +18,7 @@ import se.webstep.microservice.guestbook.jdbi.GuestbookDao;
 import se.webstep.microservice.guestbook.util.ResourceTest;
 import se.webstep.microservice.guestbook.util.TestDatabase;
 
+import static java.lang.String.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -44,14 +45,19 @@ public class EntryResourceTest {
 
     @Test
     public void create() {
+        long guestbookID = service.getJdbi().onDemand(GuestbookDao.class).save(
+                new CreateGuestbook("tmp")
+        );
         database.getDBI().onDemand(GuestbookDao.class).save(new CreateGuestbook("kalle"));
-        assertThat(database.getDBI().onDemand(EntryDao.class).list(3)).isEmpty();
-        ClientResponse response = resourceTest.doPost("/guestbook/3/entry",
+        assertThat(database.getDBI().onDemand(EntryDao.class).list(guestbookID)).isEmpty();
+        ClientResponse response = resourceTest.doPost(
+                format("/guestbook/%d/entry", guestbookID),
                 ImmutableMap.of("text", "EntryText", "author", "nisse"));
         assertThat(response.getStatus()).isEqualTo(201);
-        assertThat(database.getDBI().onDemand(EntryDao.class).list(3)).isNotEmpty();
+        assertThat(database.getDBI().onDemand(EntryDao.class).list(guestbookID)).isNotEmpty();
 
-        ClientResponse entriesResponse = entriesResourceTest.doGet("/guestbook/3/entries");
+        ClientResponse entriesResponse =
+                entriesResourceTest.doGet(format("/guestbook/%d/entries", guestbookID));
         assertThat(entriesResponse.getStatus()).isEqualTo(200);
     }
 
