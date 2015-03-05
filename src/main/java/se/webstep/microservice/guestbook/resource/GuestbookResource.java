@@ -20,16 +20,16 @@ import java.util.stream.Collectors;
 @Produces(MediaType.APPLICATION_JSON)
 public class GuestbookResource {
 
-    public final GuestbookDao dao;
+    public final MicroServicesApplication service;
 
     public GuestbookResource(MicroServicesApplication service) {
-        dao = service.getJdbi().onDemand(GuestbookDao.class);
+        this.service = service;
     }
 
     @GET
     @Path("{id}")
     public Response get(@PathParam("id") LongParam id) {
-        Optional<Guestbook> guestbook = dao.get(id.get());
+        Optional<Guestbook> guestbook = service.getJdbi().onDemand(GuestbookDao.class).get(id.get());
         if (guestbook.isPresent()) {
             return Response.ok(guestbook.get()).build();
 
@@ -40,15 +40,18 @@ public class GuestbookResource {
 
     @POST
     public Response create(@Valid CreateGuestbook createGuestbook) {
-        return Response.created(URI.create(String.valueOf(dao.save(createGuestbook)))).build();
+        return Response.created(URI.create(String.valueOf(service.getJdbi()
+                .onDemand(GuestbookDao.class)
+                .save(createGuestbook)))).build();
     }
 
     @PUT
     @Path("{id}/open")
     public Response open(@PathParam("id") LongParam id) {
-        Optional<Guestbook> guestbook = dao.get(id.get());
+        GuestbookDao guestbookDao = service.getJdbi().onDemand(GuestbookDao.class);
+        Optional<Guestbook> guestbook = guestbookDao.get(id.get());
         if (guestbook.isPresent()) {
-            dao.changeStatus(guestbook.get().id, Guestbook.Type.OPEN);
+            guestbookDao.changeStatus(guestbook.get().id, Guestbook.Type.OPEN);
             return Response.ok().build();
 
         } else {
@@ -59,9 +62,9 @@ public class GuestbookResource {
     @PUT
     @Path("{id}/close")
     public Response close(@PathParam("id") LongParam id) {
-        Optional<Guestbook> guestbook = dao.get(id.get());
+        Optional<Guestbook> guestbook = service.getJdbi().onDemand(GuestbookDao.class).get(id.get());
         if (guestbook.isPresent()) {
-            dao.changeStatus(guestbook.get().id, Guestbook.Type.CLOSED);
+            service.getJdbi().onDemand(GuestbookDao.class).changeStatus(guestbook.get().id, Guestbook.Type.CLOSED);
             return Response.ok().build();
 
         } else {
@@ -72,7 +75,7 @@ public class GuestbookResource {
     @GET
     @Path("/list/open")
     public Response allOpen() {
-        return Response.ok(ImmutableMap.of("list", dao
+        return Response.ok(ImmutableMap.of("list", service.getJdbi().onDemand(GuestbookDao.class)
                 .list()
                 .stream()
                 .filter(s -> s.status == Guestbook.Type.OPEN)
@@ -82,7 +85,7 @@ public class GuestbookResource {
     @GET
     @Path("/list")
     public Response all() {
-        return Response.ok(ImmutableMap.of("list", dao.list())).build();
+        return Response.ok(ImmutableMap.of("list", service.getJdbi().onDemand(GuestbookDao.class).list())).build();
     }
 
 }
