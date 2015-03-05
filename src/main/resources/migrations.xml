@@ -7,7 +7,7 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
     <changeSet id="1" author="guestbook-service">
-        <createTable tableName="guestbook">
+        <createTable tableName="guestbook" >
             <column name="id" type="long">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -22,8 +22,39 @@
             </column>
         </createTable>
         <createSequence sequenceName="guestbook_sequence"/>
-
-        <!--TODO -->
-
     </changeSet>
+    <changeSet id="2" author="guestbook-service" >
+      <createTable tableName="entry" >
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="guestbook_id" type="long">
+            </column>
+            <column name="name" type="varchar2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="varchar2(4096)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="guestbook-service">
+        <dropTable tableName="entry"></dropTable>
+        <createTable tableName="entry" >
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="guestbook_id" type="long">
+            </column>
+            <column name="name" type="varchar2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="varchar2(4096)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
 </databaseChangeLog>

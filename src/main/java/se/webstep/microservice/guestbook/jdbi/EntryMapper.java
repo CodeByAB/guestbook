@@ -3,6 +3,7 @@ package se.webstep.microservice.guestbook.jdbi;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import se.webstep.microservice.guestbook.core.Entry;
+import se.webstep.microservice.guestbook.core.Guestbook;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +11,11 @@ import java.sql.SQLException;
 public class EntryMapper implements ResultSetMapper<Entry> {
     @Override
     public Entry map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
-        // TODO
-        return null;
+        return new Entry(
+                resultSet.getLong("id"),
+                resultSet.getLong("guestbook_id"),
+                resultSet.getString("name"),
+                resultSet.getString("message"));
+               // resultSet.getTimestamp("created_at").toLocalDateTime());
     }
 }
