@@ -23,7 +23,31 @@
         </createTable>
         <createSequence sequenceName="guestbook_sequence"/>
 
+
+
         <!--TODO -->
 
     </changeSet>
+
+    <changeSet id="2" author="guestbook-service">
+        <createTable tableName="entry">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="varchar2(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="guestbook_id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+        <createSequence sequenceName="entry_sequence"/>
+    </changeSet>
+
 </databaseChangeLog>

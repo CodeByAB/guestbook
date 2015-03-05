@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/guestbook")
+@Path("/guestbook/{id}")
 @Produces(MediaType.APPLICATION_JSON)
 public class EntriesResource {
 
@@ -20,7 +20,7 @@ public class EntriesResource {
     }
 
     @GET
-    @Path(("{id}/entries"))
+    @Path(("/entries"))
     public Response getEntries(@PathParam("id") IntParam id) {
         // TODO
         return null;
