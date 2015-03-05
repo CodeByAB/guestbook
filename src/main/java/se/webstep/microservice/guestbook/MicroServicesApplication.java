@@ -6,6 +6,8 @@ import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.skife.jdbi.v2.DBI;
 import se.webstep.microservice.guestbook.health.SimpleHealthCheck;
 import se.webstep.microservice.guestbook.resource.DocumentationResource;
@@ -25,6 +27,12 @@ public class MicroServicesApplication extends Application<MicroServicesConfig> {
             @Override
             public DataSourceFactory getDataSourceFactory(MicroServicesConfig configuration) {
                 return configuration.getDataSourceFactory();
+            }
+        });
+        bootstrap.addBundle(new SwaggerBundle<MicroServicesConfig>() {
+            @Override
+            public SwaggerBundleConfiguration getSwaggerBundleConfiguration(MicroServicesConfig configuration) {
+                return new SwaggerBundleConfiguration("localhost", 8080);
             }
         });
     }
