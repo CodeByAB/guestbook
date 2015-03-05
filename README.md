@@ -31,9 +31,15 @@ Lättast är att starta tjänsten från IDE'n genom att köra klassen
 
 `se.webstep.microservice.guestbook.MigrateAndRunService`
 
-Den tar upp tjänsten på port 8080, dokumentation hittas under
+## Dokumentation
+Hittas via micro-tjänsten på följande URI;
 
-`http://localhost:8080/doc`
+`http://localhost:8080/doc` eller `http://localhost:8080/swagger`
+
+## Statestik
+Hittas under följande URI:
+
+`http://localhost:8081`
 
 ## Status på bygget
 Status: [![Build Status](https://magnum.travis-ci.com/WebstepSweden/guestbook.svg?token=TREsfe1aR4iNYUvrPB2R&branch=master)](https://magnum.travis-ci.com/WebstepSweden/guestbook)
