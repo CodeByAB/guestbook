@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.stream.Collectors;
 
-@Api("Resource is handle Guestbooks")
+@Api("Resource is handle guestbooks")
 @Path("/guestbook")
 @Produces(MediaType.APPLICATION_JSON)
 public class GuestbookResource {
