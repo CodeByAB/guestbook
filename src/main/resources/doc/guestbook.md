@@ -30,3 +30,14 @@ This resource handles creating, deleting, fetching guestbooks.
 
 ## Close
 `curl -X "PUT" "http://localhost:8080/guestbook/[ID]/close"`
+
+
+## Create entry
+`curl -X "POST" "http://localhost:8080/guestbook/[ID]/entry" -H "Content-Type: application/json" -d $'{"message":"test"}'`
+
+## Get all entries in guestbook
+`curl -X "GET" "http://localhost:8080/guestbook/[ID]/entries"`
+
+## Delete entry
+`curl -X "DELETE" "http://localhost:8080/guestbook/[ID]/entry/[ID]"`
+

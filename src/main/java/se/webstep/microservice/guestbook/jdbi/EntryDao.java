@@ -7,22 +7,37 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.sqlobject.customizers.SingleValueResult;
+import se.webstep.microservice.guestbook.api.CreateEntry;
 import se.webstep.microservice.guestbook.core.Entry;
 
 @RegisterMapper(EntryMapper.class)
 public abstract class EntryDao {
 
 
-    @SqlQuery("") // TODO
-    public abstract ImmutableList<Entry> list(@Bind("id") long id);
+    @SqlQuery("SELECT * FROM entry WHERE guestbook_id = :guestbookId")
+    public abstract ImmutableList<Entry> list(@Bind("guestbookId") long guestbookId);
 
-    @SqlQuery("") // TODO
+    @SqlQuery("SELECT * FROM entry WHERE id = :id AND guestbook_id = :guestbookId")
     @SingleValueResult
-    public abstract Optional<Entry> get(@Bind("id") long id);
+    public abstract Optional<Entry> get(@Bind("guestbookId") long guestbookId, @Bind("id") long id);
 
-    @SqlUpdate // TODO
-    public abstract void save();
+//    @SqlUpdate("INSERT INTO entry (id, message created_at) VALUES (:id, :message, sysdate)")
+//    public abstract void save(CreateEntry createEntry);
 
-    @SqlUpdate("") // TODO
+    public long save(Long guestbookId, CreateEntry createEntry) {
+        long id = getId();
+        insert(id, guestbookId, createEntry.message);
+        return id;
+    }
+
+    @SqlUpdate("INSERT INTO entry (id, guestbook_id, message, created_at) VALUES (:id, :guestbookId, :message, sysdate)")
+    abstract void insert(@Bind("id") long id,
+                         @Bind("guestbookId") long guestbookId,
+                         @Bind("message") String message);
+
+    @SqlUpdate("DELETE FROM entry WHERE id = :id")
     public abstract void delete(@Bind("id") long id);
+
+    @SqlQuery("SELECT NEXT VALUE FOR entry_sequence")
+    abstract long getId();
 }
