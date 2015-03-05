@@ -10,7 +10,11 @@ import java.sql.SQLException;
 public class EntryMapper implements ResultSetMapper<Entry> {
     @Override
     public Entry map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
-        // TODO
-        return null;
+        return new Entry(
+                resultSet.getLong("id"),
+                resultSet.getLong("guestbook_id"),
+                resultSet.getString("text"),
+                resultSet.getString("author")
+        );
     }
 }

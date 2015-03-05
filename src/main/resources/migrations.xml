@@ -22,8 +22,47 @@
             </column>
         </createTable>
         <createSequence sequenceName="guestbook_sequence"/>
-
-        <!--TODO -->
-
     </changeSet>
+
+    <changeSet id="2" author="guestbook-service">
+        <createTable tableName="entry">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="guestbook_id" type="long">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="varchar2(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="entry_sequence"/>
+    </changeSet>
+
+    <changeSet id="3" author="guestbook-service">
+        <addForeignKeyConstraint baseColumnNames="guestbook_id"
+                                 baseTableName="entry"
+                                 constraintName="fk_entry_guestbook"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="guestbook"/>
+    </changeSet>
+
+    <changeSet id="4" author="guestbook-service">
+        <dropForeignKeyConstraint baseTableName="entry" constraintName="fk_entry_guestbook"/>
+    </changeSet>
+
+    <changeSet id="5" author="guestbook-service">
+        <addColumn tableName="entry">
+            <column name="author" type="varchar2(60)" defaultValue="unknown">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

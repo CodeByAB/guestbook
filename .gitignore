@@ -2,3 +2,4 @@
 guestbook.iml
 target
 db:guestbook.mv.db
+db:guestbook.trace.db
