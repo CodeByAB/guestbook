@@ -25,6 +25,7 @@ Den första finns nästan komplett för att kunna tittas på, övriga är fria a
 ## Komma igång
 * Börja med att clona repot `https://github.com/WebstepSweden/guestbook.git`
 * Öppna projectet i valfri IDE
+* Bygg projektet i din IDE eller via maven `mvn clean install`
 
 Lättast är att starta tjänsten från IDE'n genom att köra klassen
 
@@ -33,3 +34,8 @@ Lättast är att starta tjänsten från IDE'n genom att köra klassen
 Den tar upp tjänsten på port 8080, dokumentation hittas under
 
 `http://localhost:8080/doc`
+
+## Status på bygget
+Status: [![Build Status](https://magnum.travis-ci.com/WebstepSweden/guestbook.svg?token=TREsfe1aR4iNYUvrPB2R&branch=master)](https://magnum.travis-ci.com/WebstepSweden/guestbook)
+
+
