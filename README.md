@@ -10,7 +10,6 @@ Följande behövs:
 ## Allmänt
 Syftet är att få känna på att bygga REST tänster i Java med hjälp av Dropwizard.
 
-
 Vi kommer påbörja att bygga en gästbok, under det första tillfället (idag alltså) kommer vi
 att bygga ett REST gränssnitt för gästboken.
 
@@ -43,5 +42,3 @@ Hittas under följande URI:
 
 ## Status på bygget
 Status: [![Build Status](https://magnum.travis-ci.com/WebstepSweden/guestbook.svg?token=TREsfe1aR4iNYUvrPB2R&branch=master)](https://magnum.travis-ci.com/WebstepSweden/guestbook)
-
-
