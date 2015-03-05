@@ -10,17 +10,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/guestbook")
+@Path("/guestbook/{id}/entries")
 @Produces(MediaType.APPLICATION_JSON)
 public class EntriesResource {
 
+    private final MicroServicesApplication service;
 
     public EntriesResource(MicroServicesApplication service) {
-
+        this.service = service;
     }
 
     @GET
-    @Path(("{id}/entries"))
     public Response getEntries(@PathParam("id") IntParam id) {
         // TODO
         return null;

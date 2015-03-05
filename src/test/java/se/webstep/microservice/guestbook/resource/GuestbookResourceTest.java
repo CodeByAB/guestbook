@@ -13,6 +13,7 @@ import se.webstep.microservice.guestbook.util.ResourceTest;
 import se.webstep.microservice.guestbook.util.TestDatabase;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 public class GuestbookResourceTest {
@@ -42,4 +43,21 @@ public class GuestbookResourceTest {
         assertThat(database.getDBI().onDemand(GuestbookDao.class).list()).isNotEmpty();
     }
 
+    @Test
+    public void listAll() {
+        // Given
+        String guestbookName = "Namnet på min gästbok!";
+
+        // When
+        resourceTest.doPost("/guestbook", ImmutableMap.of("name", guestbookName));
+
+        // Then
+        assertThat(resourceTest.doGet("/guestbook/list").getEntity(String.class)).contains(guestbookName);
+    }
+
+    @Test
+    public void listOpen() {
+        fail("TODO");
+
+    }
 }
