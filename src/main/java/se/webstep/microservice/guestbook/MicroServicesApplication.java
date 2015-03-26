@@ -3,6 +3,7 @@ package se.webstep.microservice.guestbook;
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.jdbi.DBIFactory;
+import io.dropwizard.lifecycle.setup.ExecutorServiceBuilder;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -11,6 +12,8 @@ import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.skife.jdbi.v2.DBI;
 import se.webstep.microservice.guestbook.health.SimpleHealthCheck;
 import se.webstep.microservice.guestbook.resource.DocumentationResource;
+import se.webstep.microservice.guestbook.resource.EntriesResource;
+import se.webstep.microservice.guestbook.resource.EntryResource;
 import se.webstep.microservice.guestbook.resource.GuestbookResource;
 
 public class MicroServicesApplication extends Application<MicroServicesConfig> {
@@ -43,6 +46,8 @@ public class MicroServicesApplication extends Application<MicroServicesConfig> {
 
         environment.jersey().register(new DocumentationResource(getName()));
         environment.jersey().register(new GuestbookResource(this));
+        environment.jersey().register(new EntriesResource(this));
+        environment.jersey().register(new EntryResource(this));
         environment.healthChecks().register("simple", new SimpleHealthCheck());
     }
 

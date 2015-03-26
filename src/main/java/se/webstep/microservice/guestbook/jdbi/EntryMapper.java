@@ -9,8 +9,13 @@ import java.sql.SQLException;
 
 public class EntryMapper implements ResultSetMapper<Entry> {
     @Override
-    public Entry map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
-        // TODO
-        return null;
+    public Entry map(int i, ResultSet rs, StatementContext statementContext) throws SQLException {
+        return new Entry(rs.getLong("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("message"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                Entry.Status.valueOf(rs.getString("status")));
     }
+
 }

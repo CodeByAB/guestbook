@@ -2,10 +2,12 @@ package se.webstep.microservice.guestbook.resource;
 
 import com.google.common.collect.ImmutableMap;
 import com.sun.jersey.api.client.ClientResponse;
+import io.dropwizard.testing.FixtureHelpers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.skyscreamer.jsonassert.JSONAssert;
 import se.webstep.microservice.guestbook.MicroServicesApplication;
 import se.webstep.microservice.guestbook.MicroServicesConfig;
 import se.webstep.microservice.guestbook.jdbi.GuestbookDao;
@@ -35,11 +37,14 @@ public class GuestbookResourceTest {
     }
 
     @Test
-    public void create() {
+    public void create() throws Exception{
         assertThat(database.getDBI().onDemand(GuestbookDao.class).list()).isEmpty();
         ClientResponse response = resourceTest.doPost("/guestbook", ImmutableMap.of("name", "Test"));
         assertThat(response.getStatus()).isEqualTo(201);
         assertThat(database.getDBI().onDemand(GuestbookDao.class).list()).isNotEmpty();
+
+
+        //JSONAssert.assertEquals(FixtureHelpers.fixture("fixtures/test.json"), response.getEntity(String.class), false);
     }
 
 }

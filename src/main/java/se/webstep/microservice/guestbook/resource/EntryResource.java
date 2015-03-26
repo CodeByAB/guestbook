@@ -2,29 +2,50 @@ package se.webstep.microservice.guestbook.resource;
 
 import io.dropwizard.jersey.params.LongParam;
 import se.webstep.microservice.guestbook.MicroServicesApplication;
+import se.webstep.microservice.guestbook.api.CreateEntry;
+import se.webstep.microservice.guestbook.core.Entry;
+import se.webstep.microservice.guestbook.jdbi.EntryDao;
 
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
-@Path("/guestbook/{id}/entry")
+@Path("/guestbook/{guestBookId}/entry")
 @Produces(MediaType.APPLICATION_JSON)
 public class EntryResource {
 
-    public EntryResource(MicroServicesApplication service) {
+    private final MicroServicesApplication service;
 
+    public EntryResource(MicroServicesApplication service) {
+        this.service = service;
     }
 
     @POST
-    public Response create(@PathParam("id") LongParam id) {
-        // TODO
-        return null;
+    public Response create(@PathParam("guestBookId") LongParam guestbookId,
+                           @Valid CreateEntry createEntry) {
+        return Response.created(URI.create(String.valueOf(service.getJdbi()
+                .onDemand(EntryDao.class)
+                .save(guestbookId.get(), createEntry))))
+                .build();
     }
 
     @DELETE
-    public Response delete(@PathParam("id") LongParam id) {
-        // TODO
-        return null;
+    @Path("/{id}")
+    public Response delete(@PathParam("guestBookId") LongParam ignore,
+                           @PathParam("id") LongParam id) {
+        service.getJdbi().onDemand(EntryDao.class).delete(id.get());
+        return Response.ok().build();
     }
+
+    @PUT
+    @Path(("/{id}/{status}"))
+    public Response updateStatus(@PathParam("guestBookId") LongParam ignore,
+                                 @PathParam("id") LongParam id,
+                                 @PathParam("status") Entry.Status status) {
+        service.getJdbi().onDemand(EntryDao.class).updateStatus(id.get(), status);
+        return Response.ok().build();
+    }
+
 }
