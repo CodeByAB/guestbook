@@ -1,0 +1,39 @@
+{
+  "entries": [
+    {
+      "id": 1,
+      "name": "Name_0",
+      "email": "Name_0@test.se",
+      "message": "Name_0 testar gästboken",
+      "status": "READABLE"
+    },
+    {
+      "id": 2,
+      "name": "Name_1",
+      "email": "Name_1@test.se",
+      "message": "Name_1 testar gästboken",
+      "status": "READABLE"
+    },
+    {
+      "id": 3,
+      "name": "Name_2",
+      "email": "Name_2@test.se",
+      "message": "Name_2 testar gästboken",
+      "status": "READABLE"
+    },
+    {
+      "id": 4,
+      "name": "Name_3",
+      "email": "Name_3@test.se",
+      "message": "Name_3 testar gästboken",
+      "status": "READABLE"
+    },
+    {
+      "id": 5,
+      "name": "Name_4",
+      "email": "Name_4@test.se",
+      "message": "Name_4 testar gästboken",
+      "status": "READABLE"
+    }
+  ]
+}

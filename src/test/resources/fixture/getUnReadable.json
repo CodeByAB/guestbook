@@ -1,0 +1,25 @@
+{
+  "entries": [
+    {
+      "id": 6,
+      "name": "Name_0",
+      "email": "Name_0@test.se",
+      "message": "Name_0 testar gästboken",
+      "status": "UN_READABLE"
+    },
+    {
+      "id": 7,
+      "name": "Name_1",
+      "email": "Name_1@test.se",
+      "message": "Name_1 testar gästboken",
+      "status": "UN_READABLE"
+    },
+    {
+      "id": 8,
+      "name": "Name_2",
+      "email": "Name_2@test.se",
+      "message": "Name_2 testar gästboken",
+      "status": "UN_READABLE"
+    }
+  ]
+}
