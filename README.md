@@ -46,21 +46,45 @@ Status: [![Build Status](https://magnum.travis-ci.com/WebstepSweden/guestbook.sv
 
 This resource handles creating, deleting, fetching guestbooks.
 
+## Guestbook
 
-## Create
+### Create
 `curl -X "POST" "http://localhost:8080/guestbook" -H "Content-Type: application/json" -d $'{"name":"Test"}'`
 
-## List all
+### List all
 `curl -X "GET" "http://localhost:8080/guestbook/list"`
 
-## List all Open
+### List all Open
 `curl -X "GET" "http://localhost:8080/guestbook/list/open"`
 
-## Fetch a single
-`curl -X "GET" "http://localhost:8080/guestbook/[ID]"`
+### Fetch a single
+`curl -X "GET" "http://localhost:8080/guestbook/{guestBookId}"`
 
-## Open
-`curl -X "PUT" "http://localhost:8080/guestbook/[ID]/open"`
+### Open
+`curl -X "PUT" "http://localhost:8080/guestbook/{guestBookId}/open"`
 
-## Close
-`curl -X "PUT" "http://localhost:8080/guestbook/[ID]/close"`
+### Close
+`curl -X "PUT" "http://localhost:8080/guestbook/{guestBookId}/close"`
+
+## Entry
+
+### Create entry
+`curl -X "POST" "http://localhost:8080/guestbook/{guestBookId}/entry" -H "Content-Type: application/json" -d $'{"name":"Test", "email":"test@test.se","message":"Det här skriver vi"}'`
+
+### Get entry
+`curl -X "GET" "http://localhost:8080/guestbook/{guestBookId}/entry/{id}"`
+
+### Delete entry
+`curl -X "DELETE" "http://localhost:8080/guestbook/{guestBookId}/entry/{id}
+
+### Update status for entry
+`curl -X "PUT" "http://localhost:8080/guestbook/{guestBookId}/entry/{id}/{status}`
+
+### List entries
+`curl -X "GET" "http://localhost:8080/guestbook/{guestbookId}/entries"`
+
+### List all readable entries
+`curl -X "GET" "http://localhost:8080/guestbook/{guestbookId}/entries/readable"`
+
+### List all unreadable entries
+`curl -X "GET" "http://localhost:8080/guestbook/{guestbookId}/entries/un_readable"`
