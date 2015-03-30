@@ -1,6 +1,8 @@
 package se.webstep.microservice.guestbook.resource;
 
 import com.google.common.collect.ImmutableMap;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiParam;
 import io.dropwizard.jersey.params.IntParam;
 import se.webstep.microservice.guestbook.MicroServicesApplication;
 import se.webstep.microservice.guestbook.core.Entry;
@@ -14,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.stream.Collectors;
 
+@Api("Resource is handle Entries")
 @Path("/guestbook/{guestbookId}/entries")
 @Produces(MediaType.APPLICATION_JSON)
 public class EntriesResource {
@@ -25,7 +28,8 @@ public class EntriesResource {
     }
 
     @GET
-    public Response getEntries(@PathParam("guestbookId") IntParam guestbookId) {
+    public Response getEntries(@ApiParam(value = "ID of guestbook", required = true)
+                               @PathParam("guestbookId") IntParam guestbookId) {
         return Response.ok(ImmutableMap.of(
                 "entries", service.getJdbi().onDemand(EntryDao.class).list(guestbookId.get())))
                 .build();
@@ -33,7 +37,8 @@ public class EntriesResource {
 
     @GET
     @Path("/readable")
-    public Response getReadable(@PathParam("guestbookId") IntParam guestbookId) {
+    public Response getReadable(@ApiParam(value = "ID of guestbook", required = true)
+                                @PathParam("guestbookId") IntParam guestbookId) {
         return Response.ok(ImmutableMap.of(
                 "entries", service.getJdbi().onDemand(EntryDao.class).list(guestbookId.get())
                         .stream()
@@ -43,7 +48,8 @@ public class EntriesResource {
 
     @GET
     @Path("/un_readable")
-    public Response getUnReadable(@PathParam("guestbookId") IntParam guestbookId) {
+    public Response getUnReadable(@ApiParam(value = "ID of guestbook", required = true)
+                                  @PathParam("guestbookId") IntParam guestbookId) {
         return Response.ok(ImmutableMap.of(
                 "entries", service.getJdbi().onDemand(EntryDao.class).list(guestbookId.get())
                         .stream()
