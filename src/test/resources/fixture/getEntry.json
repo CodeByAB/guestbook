@@ -1,0 +1,7 @@
+{
+  "id": 1,
+  "name": "Test",
+  "email": "test@test.se",
+  "message": "Test skriver",
+  "status": "UN_READABLE"
+}

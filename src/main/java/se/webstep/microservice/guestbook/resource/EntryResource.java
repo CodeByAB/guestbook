@@ -1,5 +1,6 @@
 package se.webstep.microservice.guestbook.resource;
 
+import com.google.common.base.Optional;
 import io.dropwizard.jersey.params.LongParam;
 import se.webstep.microservice.guestbook.MicroServicesApplication;
 import se.webstep.microservice.guestbook.api.CreateEntry;
@@ -29,6 +30,17 @@ public class EntryResource {
                 .onDemand(EntryDao.class)
                 .save(guestbookId.get(), createEntry))))
                 .build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response get(@PathParam("id") LongParam id) {
+        Optional<Entry> optional = service.getJdbi().onDemand(EntryDao.class).get(id.get());
+        if (optional.isPresent()) {
+            return Response.ok(optional.get()).build();
+        } else {
+            return Response.status(404).build();
+        }
     }
 
     @DELETE
