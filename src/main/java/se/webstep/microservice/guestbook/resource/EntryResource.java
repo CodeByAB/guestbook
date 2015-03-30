@@ -41,8 +41,8 @@ public class EntryResource {
 
     @ApiOperation("Fetching a entry with the given ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Guestbook with given ID is returned"),
-            @ApiResponse(code = 404, message = "No guestbook found")
+            @ApiResponse(code = 200, message = "Entry with given ID is returned"),
+            @ApiResponse(code = 404, message = "No entry found")
     })
     @GET
     @Path("/{id}")
@@ -70,19 +70,31 @@ public class EntryResource {
         return Response.ok().build();
     }
 
-    @ApiOperation("Updating status for a entry")
+    @ApiOperation("Updating status for a entry to readable")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Status was updated")
     })
     @PUT
-    @Path(("/{id}/{status}"))
-    public Response updateStatus(@ApiParam(value = "ID of guestbook", required = true)
-                                 @PathParam("guestBookId") LongParam ignore,
-                                 @ApiParam(value = "ID of entry", required = true)
-                                 @PathParam("id") LongParam id,
-                                 @ApiParam(value = "Status to be set", required = true)
-                                 @PathParam("status") Entry.Status status) {
-        service.getJdbi().onDemand(EntryDao.class).updateStatus(id.get(), status);
+    @Path(("/{id}/readable"))
+    public Response updateStatusReadable(@ApiParam(value = "ID of guestbook", required = true)
+                                         @PathParam("guestBookId") LongParam ignore,
+                                         @ApiParam(value = "ID of entry", required = true)
+                                         @PathParam("id") LongParam id) {
+        service.getJdbi().onDemand(EntryDao.class).updateStatus(id.get(), Entry.Status.READABLE);
+        return Response.ok().build();
+    }
+
+    @ApiOperation("Updating status for a entry to unreadable")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Status was updated")
+    })
+    @PUT
+    @Path(("/{id}/un_readable"))
+    public Response updateStatusUnReadable(@ApiParam(value = "ID of guestbook", required = true)
+                                           @PathParam("guestBookId") LongParam ignore,
+                                           @ApiParam(value = "ID of entry", required = true)
+                                           @PathParam("id") LongParam id) {
+        service.getJdbi().onDemand(EntryDao.class).updateStatus(id.get(), Entry.Status.UN_READABLE);
         return Response.ok().build();
     }
 

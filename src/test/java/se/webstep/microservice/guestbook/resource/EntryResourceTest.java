@@ -62,8 +62,53 @@ public class EntryResourceTest {
         ClientResponse response = resourceTest.doGet(location);
         assertThat(response.getStatus()).isEqualTo(200);
         JSONAssert.assertEquals(fixture("fixture/getEntry.json"), response.getEntity(String.class), false);
-
     }
+
+    @Test
+    public void getUnknownEntry() throws Exception {
+        ClientResponse response = resourceTest.doGet("/guestbook/10/entry/1");
+        assertThat(response.getStatus()).isEqualTo(404);
+    }
+
+    @Test
+    public void delete() {
+        EntryDao entryDao = database.getDBI().onDemand(EntryDao.class);
+        long id = entryDao.save(10, new CreateEntry("Name", "name@name.se", "Message"));
+
+        assertThat(entryDao.get(id).isPresent());
+
+        ClientResponse response = resourceTest.doDelete(String.format("/guestbook/10/entry/%d", id));
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(!entryDao.get(id).isPresent());
+    }
+
+    @Test
+    public void setReadable() {
+        EntryDao entryDao = database.getDBI().onDemand(EntryDao.class);
+        long id = entryDao.save(10, new CreateEntry("Name", "name@name.se", "Message"));
+
+        assertThat(entryDao.get(id).isPresent());
+        assertThat(entryDao.get(id).get().status).isEqualTo(Entry.Status.UN_READABLE);
+
+        ClientResponse response = resourceTest.doPut(String.format("/guestbook/10/entry/%d/readable", id), null);
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(entryDao.get(id).get().status).isEqualTo(Entry.Status.READABLE);
+    }
+
+    @Test
+    public void setUnReadable() {
+        EntryDao entryDao = database.getDBI().onDemand(EntryDao.class);
+        long id = entryDao.save(10, new CreateEntry("Name", "name@name.se", "Message"));
+
+        assertThat(entryDao.get(id).isPresent());
+        entryDao.updateStatus(id, Entry.Status.READABLE);
+        assertThat(entryDao.get(id).get().status).isEqualTo(Entry.Status.READABLE);
+
+        ClientResponse response = resourceTest.doPut(String.format("/guestbook/10/entry/%d/un_readable", id), null);
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(entryDao.get(id).get().status).isEqualTo(Entry.Status.UN_READABLE);
+    }
+
 
     @Test
     public void getReadable() throws Exception {

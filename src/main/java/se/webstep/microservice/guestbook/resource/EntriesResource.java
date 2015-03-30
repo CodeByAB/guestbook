@@ -1,8 +1,7 @@
 package se.webstep.microservice.guestbook.resource;
 
 import com.google.common.collect.ImmutableMap;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.*;
 import io.dropwizard.jersey.params.IntParam;
 import se.webstep.microservice.guestbook.MicroServicesApplication;
 import se.webstep.microservice.guestbook.core.Entry;
@@ -27,6 +26,10 @@ public class EntriesResource {
         this.service = service;
     }
 
+    @ApiOperation("Fetching all entries for given guestbook")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Entry created")
+    })
     @GET
     public Response getEntries(@ApiParam(value = "ID of guestbook", required = true)
                                @PathParam("guestbookId") IntParam guestbookId) {
@@ -35,6 +38,10 @@ public class EntriesResource {
                 .build();
     }
 
+    @ApiOperation("Fetching all readable entries for given guestbook")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Entry created")
+    })
     @GET
     @Path("/readable")
     public Response getReadable(@ApiParam(value = "ID of guestbook", required = true)
@@ -46,6 +53,10 @@ public class EntriesResource {
                         .collect(Collectors.toList()))).build();
     }
 
+    @ApiOperation("Fetching all unreadable entries for given guestbook")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Entry created")
+    })
     @GET
     @Path("/un_readable")
     public Response getUnReadable(@ApiParam(value = "ID of guestbook", required = true)
