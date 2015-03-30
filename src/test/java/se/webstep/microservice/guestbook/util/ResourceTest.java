@@ -40,10 +40,12 @@ public class ResourceTest implements TestRule {
     public Statement apply(Statement base, Description description) {
         return resources.apply(base, description);
     }
+
     @SuppressWarnings("unused")
     public ResourceTestRule getUnderlyingRule() {
         return resources;
     }
+
     @SuppressWarnings("unused")
     public Client client() {
         return resources.client();
@@ -55,6 +57,7 @@ public class ResourceTest implements TestRule {
                 .type(MediaType.APPLICATION_JSON_TYPE)
                 .post(ClientResponse.class, payload);
     }
+
     @SuppressWarnings("unused")
     public ClientResponse doPut(String resource, Object payload) {
         return resources.client()
@@ -62,6 +65,7 @@ public class ResourceTest implements TestRule {
                 .type(MediaType.APPLICATION_JSON_TYPE)
                 .put(ClientResponse.class, payload);
     }
+
     @SuppressWarnings("unused")
     public ClientResponse doGet(String resource) {
         return resources.client()
@@ -69,6 +73,7 @@ public class ResourceTest implements TestRule {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .get(ClientResponse.class);
     }
+
     @SuppressWarnings("unused")
     public ClientResponse doDelete(String resource) {
         return resources.client()
@@ -76,6 +81,7 @@ public class ResourceTest implements TestRule {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .delete(ClientResponse.class);
     }
+
     @SuppressWarnings("unused")
     public void verifyJsonContentType(ClientResponse response) {
         MediaType mediaType = response.getType();
@@ -104,6 +110,7 @@ public class ResourceTest implements TestRule {
 
         return errorResponse;
     }
+
     @SuppressWarnings("unused")
     public ErrorResponse getValidatedErrorResponse(ClientResponse response) {
         ErrorResponse errorResponse = getErrorResponse(response);

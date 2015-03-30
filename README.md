@@ -42,3 +42,25 @@ Hittas under följande URI:
 
 ## Status på bygget
 Status: [![Build Status](https://magnum.travis-ci.com/WebstepSweden/guestbook.svg?token=TREsfe1aR4iNYUvrPB2R&branch=master)](https://magnum.travis-ci.com/WebstepSweden/guestbook)
+
+
+This resource handles creating, deleting, fetching guestbooks.
+
+
+## Create
+`curl -X "POST" "http://localhost:8080/guestbook" -H "Content-Type: application/json" -d $'{"name":"Test"}'`
+
+## List all
+`curl -X "GET" "http://localhost:8080/guestbook/list"`
+
+## List all Open
+`curl -X "GET" "http://localhost:8080/guestbook/list/open"`
+
+## Fetch a single
+`curl -X "GET" "http://localhost:8080/guestbook/[ID]"`
+
+## Open
+`curl -X "PUT" "http://localhost:8080/guestbook/[ID]/open"`
+
+## Close
+`curl -X "PUT" "http://localhost:8080/guestbook/[ID]/close"`

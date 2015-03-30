@@ -27,6 +27,6 @@ This resource handles creating, deleting, fetching guestbooks.
 
 ## Open
 `curl -X "PUT" "http://localhost:8080/guestbook/[ID]/open"`
-
-## Close
-`curl -X "PUT" "http://localhost:8080/guestbook/[ID]/close"`
+se
+`curl
+## Clo -X "PUT" "http://localhost:8080/guestbook/[ID]/close"`

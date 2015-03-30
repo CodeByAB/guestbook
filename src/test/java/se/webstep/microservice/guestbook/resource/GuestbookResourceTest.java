@@ -37,7 +37,7 @@ public class GuestbookResourceTest {
     }
 
     @Test
-    public void create() throws Exception{
+    public void create() throws Exception {
         assertThat(database.getDBI().onDemand(GuestbookDao.class).list()).isEmpty();
         ClientResponse response = resourceTest.doPost("/guestbook", ImmutableMap.of("name", "Test"));
         assertThat(response.getStatus()).isEqualTo(201);
