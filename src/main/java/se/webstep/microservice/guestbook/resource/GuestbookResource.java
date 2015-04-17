@@ -62,7 +62,7 @@ public class GuestbookResource {
             @ApiResponse(code = 404, message = "No guestbook found")
     })
     @PUT
-    @Path("{id}/open")
+    @Path("/{id}/open")
     public Response open(@ApiParam(value = "ID of guestbook", required = true)
                          @PathParam("id") LongParam id) {
         GuestbookDao guestbookDao = service.getJdbi().onDemand(GuestbookDao.class);
@@ -82,7 +82,7 @@ public class GuestbookResource {
             @ApiResponse(code = 404, message = "No guestbook found")
     })
     @PUT
-    @Path("{id}/close")
+    @Path("/{id}/close")
     public Response close(@ApiParam(value = "ID of guestbook", required = true)
                           @PathParam("id") LongParam id) {
         Optional<Guestbook> guestbook = service.getJdbi().onDemand(GuestbookDao.class).get(id.get());

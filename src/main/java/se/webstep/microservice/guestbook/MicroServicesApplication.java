@@ -54,6 +54,7 @@ public class MicroServicesApplication extends Application<MicroServicesConfig> {
         environment.jersey().register(new EntriesResource(this));
         environment.healthChecks().register("simple", new SimpleHealthCheck());
 
+
         FilterRegistration.Dynamic filter = environment.servlets().addFilter("CrossOriginFilter", new CrossOriginFilter());
         filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");

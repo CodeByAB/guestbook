@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 
 @Api("Resource is handle Entry")
-@Path("/")
+@Path("/guestbook/{guestbookId}/entry")
 @Produces(MediaType.APPLICATION_JSON)
 public class EntryResource {
 
@@ -25,7 +25,6 @@ public class EntryResource {
         this.service = service;
     }
 
-    @Path("/guestbook/{id}/entry")
     @ApiOperation("Create an entry in a specific guestbook")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Entry was created"),
@@ -33,7 +32,8 @@ public class EntryResource {
     })
     @POST
     public Response create(@ApiParam(value = "ID of guestbook", required = true)
-                               @PathParam("id") LongParam guestbookId, CreateEntry createEntry) {
+                               @PathParam("guestbookId") LongParam guestbookId, CreateEntry createEntry) {
+        System.out.println("create - guestbookId = " + guestbookId + ", entry: " + createEntry);
         Optional<Guestbook> guestbookOptional = service.getJdbi().onDemand(GuestbookDao.class).get(guestbookId.get());
         if( !guestbookOptional.isPresent() ){
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -42,17 +42,19 @@ public class EntryResource {
         return Response.created(URI.create(String.valueOf(newEntryId))).build();
     }
 
-    @Path("/guestbook/entry/{id}")
+
     @ApiOperation("Delete an entry")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Entry was deleted"),
             @ApiResponse(code = 404, message = "Unknown entry")
     })
     @DELETE
-    public Response delete(@PathParam("id") LongParam id) {
+    @Path("/{id}")
+    public Response delete(@ApiParam(value = "Guestbook Id", required = true) @PathParam("guestbookId") LongParam guestbookId,
+                           @ApiParam(value = "Entry Id", required = true) @PathParam("id") LongParam id) {
         EntryDao entryDao = service.getJdbi().onDemand(EntryDao.class);
         if( !entryDao.get(id.get()).isPresent()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
         entryDao.delete(id.get());
         return Response.ok().build();
