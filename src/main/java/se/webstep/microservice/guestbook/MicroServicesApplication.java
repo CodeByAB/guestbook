@@ -8,12 +8,17 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.skife.jdbi.v2.DBI;
 import se.webstep.microservice.guestbook.health.SimpleHealthCheck;
 import se.webstep.microservice.guestbook.resource.DocumentationResource;
 import se.webstep.microservice.guestbook.resource.EntriesResource;
 import se.webstep.microservice.guestbook.resource.EntryResource;
 import se.webstep.microservice.guestbook.resource.GuestbookResource;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import java.util.EnumSet;
 
 public class MicroServicesApplication extends Application<MicroServicesConfig> {
 
@@ -48,6 +53,10 @@ public class MicroServicesApplication extends Application<MicroServicesConfig> {
         environment.jersey().register(new EntryResource(this));
         environment.jersey().register(new EntriesResource(this));
         environment.healthChecks().register("simple", new SimpleHealthCheck());
+
+        FilterRegistration.Dynamic filter = environment.servlets().addFilter("CrossOriginFilter", new CrossOriginFilter());
+        filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+        filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
     }
 
     @Override

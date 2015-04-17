@@ -13,7 +13,6 @@ import se.webstep.microservice.guestbook.core.Entry;
 @RegisterMapper(EntryMapper.class)
 public abstract class EntryDao {
 
-
     @SqlQuery("SELECT * FROM entry WHERE guestbook_id = :guestbookId")
     public abstract ImmutableList<Entry> list(@Bind("guestbookId") long guestbookId);
 

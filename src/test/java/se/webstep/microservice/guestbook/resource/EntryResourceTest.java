@@ -1,32 +1,27 @@
 package se.webstep.microservice.guestbook.resource;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.sun.jersey.api.client.ClientResponse;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import se.webstep.microservice.guestbook.MicroServicesApplication;
 import se.webstep.microservice.guestbook.MicroServicesConfig;
 import se.webstep.microservice.guestbook.api.CreateGuestbook;
-import se.webstep.microservice.guestbook.core.Guestbook;
 import se.webstep.microservice.guestbook.jdbi.EntryDao;
 import se.webstep.microservice.guestbook.jdbi.GuestbookDao;
 import se.webstep.microservice.guestbook.util.ResourceTest;
 import se.webstep.microservice.guestbook.util.TestDatabase;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 public class EntryResourceTest {
 
     private MicroServicesApplication service = Mockito.mock(MicroServicesApplication.class);
-
-
+    
     @Rule
     public TestDatabase<MicroServicesConfig> database =
             TestDatabase.forConfiguration(MicroServicesConfig.class,
