@@ -1,7 +1,7 @@
 package se.webstep.microservice.guestbook.util;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.junit.rules.ExternalResource;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.tweak.HandleCallback;

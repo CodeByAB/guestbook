@@ -2,9 +2,9 @@ package se.webstep.microservice.guestbook.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.time.LocalDateTime;
 
@@ -41,7 +41,7 @@ public class Guestbook {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    public static enum Type {
+    public enum Type {
         OPEN, CLOSED
     }
 }

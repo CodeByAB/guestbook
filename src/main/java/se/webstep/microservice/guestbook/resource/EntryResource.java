@@ -8,8 +8,10 @@ import se.webstep.microservice.guestbook.api.CreateEntry;
 import se.webstep.microservice.guestbook.core.Entry;
 import se.webstep.microservice.guestbook.jdbi.EntryDao;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -32,11 +34,11 @@ public class EntryResource {
     @POST
     public Response create(@ApiParam(value = "ID of guestbook", required = true)
                            @PathParam("guestBookId") LongParam guestbookId,
-                           @Valid CreateEntry createEntry) {
-        return Response.created(URI.create(String.valueOf(service.getJdbi()
+                           @Valid CreateEntry createEntry,
+                           @Context HttpServletRequest httpRequest) {
+        return Response.created(URI.create(String.format("/guestbook/%d/entry/%d", guestbookId.get(), service.getJdbi()
                 .onDemand(EntryDao.class)
-                .save(guestbookId.get(), createEntry))))
-                .build();
+                .save(guestbookId.get(), createEntry)))).build();
     }
 
     @ApiOperation("Fetching a entry with the given ID")

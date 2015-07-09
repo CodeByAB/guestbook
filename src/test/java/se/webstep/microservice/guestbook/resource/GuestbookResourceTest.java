@@ -1,18 +1,20 @@
 package se.webstep.microservice.guestbook.resource;
 
 import com.google.common.collect.ImmutableMap;
-import com.sun.jersey.api.client.ClientResponse;
-import io.dropwizard.testing.FixtureHelpers;
+import org.glassfish.jersey.client.ClientResponse;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.skyscreamer.jsonassert.JSONAssert;
 import se.webstep.microservice.guestbook.MicroServicesApplication;
 import se.webstep.microservice.guestbook.MicroServicesConfig;
 import se.webstep.microservice.guestbook.jdbi.GuestbookDao;
 import se.webstep.microservice.guestbook.util.ResourceTest;
 import se.webstep.microservice.guestbook.util.TestDatabase;
+
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -39,12 +41,13 @@ public class GuestbookResourceTest {
     @Test
     public void create() throws Exception {
         assertThat(database.getDBI().onDemand(GuestbookDao.class).list()).isEmpty();
-        ClientResponse response = resourceTest.doPost("/guestbook", ImmutableMap.of("name", "Test"));
+
+        Response response = resourceTest.doPost("/guestbook", Entity.entity(ImmutableMap.of("name", "Test"), MediaType.APPLICATION_JSON_TYPE));
         assertThat(response.getStatus()).isEqualTo(201);
         assertThat(database.getDBI().onDemand(GuestbookDao.class).list()).isNotEmpty();
 
 
-        //JSONAssert.assertEquals(FixtureHelpers.fixture("fixtures/test.json"), response.getEntity(String.class), false);
+        //JSONAssert.assertEquals(FixtureHelpers.fixture("fixtures/test.json"), response.readEntity(String.class), false);
     }
 
 }
